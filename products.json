@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Item A",
+    "description": "Item A is an item",
+    "image": "../../images/products/A.png",
+    "price": "0",
+    "categories": [ "A and B", "A and C" ]
+  },
+  {
+    "name": "Item B",
+    "description": "Item B is an item",
+    "image": "../../images/products/B.png",
+    "price": "0",
+    "categories": [ "A and B", "B and D" ]
+  },
+  {
+    "name": "Item C",
+    "description": "Item C is an item",
+    "image": "../../images/products/C.png",
+    "price": "0",
+    "categories": [ "C and D", "A and C" ]
+  },
+  {
+    "name": "Item D",
+    "description": "Item D is an item",
+    "image": "../../images/products/D.png",
+    "price": "0",
+    "categories": [ "C and D", "B and D" ]
+  }
+]
