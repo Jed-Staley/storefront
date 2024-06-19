@@ -1,7 +1,16 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Box } from '@mui/material';
+import { AppBar, Toolbar, Typography, Box, IconButton } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleCart } from '../store/cart';
 
 function Header() {
+  const dispatch = useDispatch();
+
+  const handleToggleCart = () => {
+    dispatch(toggleCart());
+  };
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -10,6 +19,9 @@ function Header() {
             My Virtual Store
           </Typography>
         </Box>
+        <IconButton color="inherit" onClick={handleToggleCart}>
+          <ShoppingCartIcon />
+        </IconButton>
       </Toolbar>
     </AppBar>
   );
