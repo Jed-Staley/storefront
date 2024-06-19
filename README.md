@@ -83,3 +83,5 @@ The application is created with the following overall architecture and methodolo
 ## Credits
 
 - OpenAI's ChatGPT 4o was used extensively in writing tests and debugging
+
+- Cart icon obtained from flaticon.com [here](https://www.flaticon.com/free-icons/smart-cart)
