@@ -1,16 +1,18 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { removeFromCart } from '../store/cart';
 import { Box, Typography, List, ListItem, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { removeFromCart } from '../store/cart';
 
 function Cart() {
   const cart = useSelector((state) => state.cart);
+  const activeCategory = useSelector((state) => state.categories.activeCategory);
   const cartItems = cart.items;
   const dispatch = useDispatch();
 
-  const handleRemoveFromCart = (index) => {
-    dispatch(removeFromCart(index));
+  const handleRemoveFromCart = (item) => {
+    dispatch(removeFromCart({ cartId: item.cartId, productId: item._id, category: activeCategory }));
   };
 
   return (
@@ -32,9 +34,9 @@ function Cart() {
       <List>
         {cartItems.map((item, index) => (
           <ListItem
-            key={index}
+            key={item.cartId}
             secondaryAction={
-              <IconButton edge="end" aria-label="delete" onClick={() => handleRemoveFromCart(index)}>
+              <IconButton edge="end" aria-label="delete" onClick={() => handleRemoveFromCart(item)}>
                 <DeleteIcon />
               </IconButton>
             }
