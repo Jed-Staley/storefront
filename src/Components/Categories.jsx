@@ -1,11 +1,16 @@
-import React from 'react';
+// eslint-disable-next-line no-unused-vars
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectCategory } from '../store/categories';
+import { selectCategory, fetchCategories } from '../store/categories';
 import { Grid, Paper, ButtonBase, Typography } from '@mui/material';
 
 function Categories() {
   const categories = useSelector((state) => state.categories.categories);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
 
   if (!Array.isArray(categories)) {
     return null;

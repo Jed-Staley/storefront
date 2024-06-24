@@ -1,22 +1,17 @@
-import productsData from '../../products.json';
+import axios from 'axios';
 
-export const loadProducts = () => {
-  return productsData.map(product => ({
-    name: product.name,
-    description: product.description,
-    image: product.image,
-    price: product.price,
-    categories: product.categories,
-  }));
-};
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export const loadCategories = () => {
-  const categories = new Set();
-  productsData.forEach(product => {
-    product.categories.forEach(category => categories.add(category));
-  });
-  return Array.from(categories).map(category => ({
-    name: category,
-    displayName: category,
-  }));
+export const loadCategories = async () => {
+  try {
+    const response = await axios.get(`${SERVER_URL}/categories`);
+    console.log('Categories loaded:', response.data);
+    return response.data.map(category => ({
+      name: category,
+      displayName: category,
+    }));
+  } catch (error) {
+    console.error('Error loading categories:', error);
+    return [];
+  }
 };

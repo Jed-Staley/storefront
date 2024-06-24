@@ -1,9 +1,10 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProductsByCategory } from '../store/products';
 import { addToCart } from '../store/cart';
 import { Grid, Card, CardContent, CardMedia, Typography, Button, Box } from '@mui/material';
+import Product from './Product';
 
 function Products() {
   const dispatch = useDispatch();
@@ -11,9 +12,11 @@ function Products() {
   const products = useSelector((state) => state.products.items);
   const status = useSelector((state) => state.products.status);
   const error = useSelector((state) => state.products.error);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     if (activeCategory) {
+      setSelectedProduct(null);
       dispatch(fetchProductsByCategory(activeCategory));
     }
   }, [activeCategory, dispatch]);
@@ -30,6 +33,14 @@ function Products() {
     dispatch(addToCart({ product, category: activeCategory }));
   };
 
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+  };
+
+  if (selectedProduct) {
+    return <Product product={selectedProduct} />;
+  }
+
   return (
     <Box sx={{ mt: 2 }}>
       <Grid container spacing={3}>
@@ -44,7 +55,13 @@ function Products() {
                 title={product.name}
               />
               <CardContent>
-                <Typography variant="h5">{product.name}</Typography>
+                <Typography
+                  variant="h5"
+                  sx={{ cursor: 'pointer', '&:hover': { textDecoration: 'underline' } }}
+                  onClick={() => handleProductClick(product)}
+                >
+                  {product.name}
+                </Typography>
                 <Typography>{product.description}</Typography>
                 <Typography variant="body2">${product.price}</Typography>
                 <Typography variant="body2">{product.quantity} in stock</Typography>

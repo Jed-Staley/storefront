@@ -8,17 +8,19 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 export const addToCart = createAsyncThunk(
   'cart/addToCart',
   async ({ product, category }, { dispatch }) => {
-    await axios.post(`${SERVER_URL}/cart/${product._id}`);
+    const response = await axios.post(`${SERVER_URL}/cart/${product._id}`);
     dispatch(fetchProductsByCategory(category));
-    return { ...product, cartId: uuidv4() };
+    return { ...response.data, cartId: uuidv4() };
   }
 );
 
 export const removeFromCart = createAsyncThunk(
   'cart/removeFromCart',
-  async ({ cartId, productId, category }, { dispatch }) => {
+  async ({ cartId, productId, categories, activeCategory }, { dispatch }) => {
     await axios.delete(`${SERVER_URL}/cart/${productId}`);
-    dispatch(fetchProductsByCategory(category));
+    if (categories.includes(activeCategory)) {
+      dispatch(fetchProductsByCategory(activeCategory));
+    }
     return cartId;
   }
 );
@@ -33,6 +35,9 @@ const cartSlice = createSlice({
     toggleCart: (state) => {
       state.isVisible = !state.isVisible;
     },
+    clearCart: (state) => {
+      state.items = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -45,5 +50,5 @@ const cartSlice = createSlice({
   },
 });
 
-export const { toggleCart } = cartSlice.actions;
+export const { toggleCart, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

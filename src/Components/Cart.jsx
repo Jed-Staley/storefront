@@ -1,19 +1,29 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromCart } from '../store/cart';
-import { Box, Typography, List, ListItem, IconButton } from '@mui/material';
+import { Box, Typography, List, ListItem, IconButton, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Checkout from './Checkout'; // Import the Checkout component
 
-function Cart() {
+const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const cartItems = [...cart.items].reverse();
   const activeCategory = useSelector((state) => state.categories.activeCategory);
-  const cartItems = cart.items;
   const dispatch = useDispatch();
+  const [checkout, setCheckout] = useState(false); // State to toggle Checkout view
 
   const handleRemoveFromCart = (item) => {
-    dispatch(removeFromCart({ cartId: item.cartId, productId: item._id, category: activeCategory }));
+    dispatch(removeFromCart({ cartId: item.cartId, productId: item._id, categories: item.categories, activeCategory }));
   };
+
+  const handleCheckout = () => {
+    setCheckout(true);
+  };
+
+  if (checkout) {
+    return <Checkout />;
+  }
 
   return (
     <Box
@@ -45,8 +55,16 @@ function Cart() {
           </ListItem>
         ))}
       </List>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleCheckout}
+        sx={{ mt: 2 }}
+      >
+        Checkout
+      </Button>
     </Box>
   );
-}
+};
 
 export default Cart;
