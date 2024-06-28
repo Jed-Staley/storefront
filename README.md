@@ -6,6 +6,11 @@ An online shopping portal for a fictional store.
 
 Jedidiah Staley
 
+## Deployment
+
+The [Deployed Site](https://staley-store.netlify.app/) will take about 60 seconds to display content due to the backend server having to spin up, being a free instance on Render.com.
+
+
 ## Overview
 
 The Virtual Store application powers an online storefront that allows users to browse product offerings by category, place items in their shopping cart, and check out when they are ready to make their purchase.
